@@ -7,6 +7,8 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
+
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -78,8 +80,19 @@ public class BurgerTest {
     public void moveIngredient() {
         burger.addIngredient(trivialIngredient);
         burger.addIngredient(nontrivialIngredient);
-        burger.moveIngredient(0,1);
+        burger.moveIngredient(0, 1);
 
-        Assert.assertEquals(1,burger.ingredients.lastIndexOf(trivialIngredient));
+        Assert.assertEquals(1, burger.ingredients.lastIndexOf(trivialIngredient));
+    }
+
+    @Test
+    public void getPrice() {
+        burger.setBuns(bun);
+        burger.addIngredient(trivialIngredient);
+        burger.addIngredient(nontrivialIngredient);
+        float expected = bun.price * 2 + trivialIngredient.price + nontrivialIngredient.price;
+        float actual = burger.getPrice();
+
+        assertEquals("Используется некорректное значение стоимости бургера", expected, actual, 0);
     }
 }
